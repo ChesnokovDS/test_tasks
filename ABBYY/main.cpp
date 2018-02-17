@@ -52,11 +52,20 @@ int main() {
     assert(storage.HowMany(EColor::GREEN          ) == storage.GetAll(EColor::GREEN          ).size());
     assert(storage.HowMany(EColor::UNDEFINED_COLOR) == storage.GetAll(EColor::UNDEFINED_COLOR).size());
 
+    TShape founded = storage.GetAll(EType::RHOMBUS, EColor::GREEN).front();
+    assert(founded.id == 3 && founded.type == EType::RHOMBUS && founded.color == EColor::GREEN);
+    std::unordered_set<TShape::Id_t> ids;
     for (int it = 0; it <= EType::UNDEFINED_TYPE; ++it)
         for (int ic = 0; ic <= EColor::UNDEFINED_COLOR; ++ic) {
             EType  t = static_cast<EType >(it);
             EColor c = static_cast<EColor>(ic);
             assert(storage.HowMany(t, c) == storage.GetAll(t, c).size());
+            auto sliced = storage.GetAll(t, c);
+            for (auto & shape : sliced) {
+                auto it = ids.insert(shape.id);
+                assert(shape.type == t && shape.color == c);
+                assert(it.second);
+            }
         }
 
     TShape::Id_t testedId = 111;

@@ -5,7 +5,7 @@
 TShapeStorage& TShapeStorage::operator<<(TShape shape) {
     auto it = m_shapes.find(shape);
     if (it != m_shapes.end())
-        throw std::logic_error("ERROR: Found collision of the shape's id");
+        throw std::logic_error("ERROR: Found collision of the shape's id.");
 
     m_shapes.insert(it, std::move(shape));
     m_storage[shape.type][shape.color].insert(shape);
@@ -14,13 +14,13 @@ TShapeStorage& TShapeStorage::operator<<(TShape shape) {
 }
 
 bool TShapeStorage::Contain(TShape::Id_t id) const {
-    return m_shapes.find(TShape(id, TShape::EType::UNDEFINED_TYPE, TShape::EColor::UNDEFINED_COLOR)) != m_shapes.end();
+    return m_shapes.find(TShape(id)) != m_shapes.end();
 }
 
 const TShape & TShapeStorage::Get(TShape::Id_t id) const {
     auto it = m_shapes.find(TShape(id));
     if (it == m_shapes.end())
-        throw std::logic_error("ERROR: Found collision of the shape's id");
+        throw std::logic_error("ERROR: An attempt to get the missing object.");
 
     return *it;
 }

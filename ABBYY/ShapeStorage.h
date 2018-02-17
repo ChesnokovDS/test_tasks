@@ -11,12 +11,6 @@ class TShapeStorage {
     using TTypeBucket = std::array<TColorBucket, TShape::EType::UNDEFINED_TYPE + 1>;
 
 public:
-    TShapeStorage() = default;
-    TShapeStorage(const TShapeStorage&) = default;
-    TShapeStorage& operator=(const TShapeStorage&) = default;
-    TShapeStorage(TShapeStorage &&) = default;
-    TShapeStorage& operator=(TShapeStorage&&) = default;
-
     TShapeStorage& operator <<(TShape shape);
     bool Contain(TShape::Id_t) const;
     const TShape & Get(TShape::Id_t) const;
