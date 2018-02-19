@@ -68,6 +68,8 @@ int main() {
             }
         }
 
+    assert(ids.size() == storage.HowMany());
+
     TShape::Id_t testedId = 111;
     assert(!storage.Contain(testedId));
     assert(!storage.Remove(testedId));

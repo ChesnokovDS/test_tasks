@@ -3,6 +3,8 @@
 
 
 TShapeStorage& TShapeStorage::operator<<(TShape shape) {
+    assert(shape.type  <= TShape::EType ::UNDEFINED_TYPE );
+    assert(shape.color <= TShape::EColor::UNDEFINED_COLOR);
     auto it = m_shapes.find(shape);
     if (it != m_shapes.end())
         throw std::logic_error("ERROR: Found collision of the shape's id.");
@@ -40,6 +42,7 @@ size_t TShapeStorage::HowMany() const {
 }
 
 size_t TShapeStorage::HowMany(TShape::EType type) const {
+    assert(type  <= TShape::EType ::UNDEFINED_TYPE );
     auto & colorBucket = m_storage[type];
     size_t size = 0;
     for (auto & shapeSet : colorBucket)
@@ -48,6 +51,7 @@ size_t TShapeStorage::HowMany(TShape::EType type) const {
 }
 
 size_t TShapeStorage::HowMany(TShape::EColor color) const {
+    assert(color <= TShape::EColor::UNDEFINED_COLOR);
     size_t size = 0;
     for(auto & colorBucket : m_storage)
         size += colorBucket[color].size();
@@ -55,6 +59,8 @@ size_t TShapeStorage::HowMany(TShape::EColor color) const {
 }
 
 size_t TShapeStorage::HowMany(TShape::EType type, TShape::EColor color) const {
+    assert(type  <= TShape::EType ::UNDEFINED_TYPE );
+    assert(color <= TShape::EColor::UNDEFINED_COLOR);
     return m_storage[type][color].size();
 }
 
@@ -63,6 +69,7 @@ std::vector<TShape> TShapeStorage::GetAll() const {
 }
 
 std::vector<TShape> TShapeStorage::GetAll(TShape::EType type) const {
+    assert(type  <= TShape::EType ::UNDEFINED_TYPE );
     std::vector<TShape> ret;
     ret.reserve(HowMany(type));
     auto & colorBucket = m_storage[type];
@@ -73,6 +80,7 @@ std::vector<TShape> TShapeStorage::GetAll(TShape::EType type) const {
 }
 
 std::vector<TShape> TShapeStorage::GetAll(TShape::EColor color) const {
+    assert(color <= TShape::EColor::UNDEFINED_COLOR);
     std::vector<TShape> ret;
     ret.reserve(HowMany(color));
     for (auto &colorBucket : m_storage) {
@@ -84,6 +92,8 @@ std::vector<TShape> TShapeStorage::GetAll(TShape::EColor color) const {
 }
 
 std::vector<TShape> TShapeStorage::GetAll(TShape::EType type, TShape::EColor color) const {
+    assert(type  <= TShape::EType ::UNDEFINED_TYPE );
+    assert(color <= TShape::EColor::UNDEFINED_COLOR);
     auto shapeSet = m_storage[type][color];
     return {shapeSet.begin(), shapeSet.end()};
 }
