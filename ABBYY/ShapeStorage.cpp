@@ -9,8 +9,8 @@ TShapeStorage& TShapeStorage::operator<<(TShape shape) {
     if (it != m_shapes.end())
         throw std::logic_error("ERROR: Found collision of the shape's id.");
 
-    m_shapes.insert(it, std::move(shape));
-    m_storage[shape.type][shape.color].insert(shape);
+    m_shapes.insert(it, shape);
+    m_storage[shape.type][shape.color].insert(std::move(shape));
 
     return *this;
 }
